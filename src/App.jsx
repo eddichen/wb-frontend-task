@@ -6,6 +6,18 @@ import ErrorMessage from "./components/ErrorMessage";
 const formatNumber = (number) =>
   new Intl.NumberFormat("en", { minimumFractionDigits: 2 }).format(number);
 
+const getTotal = (items) => {
+  let total = 0;
+
+  if (!items) return total;
+
+  for (const item of items) {
+    total += item.revenue;
+  }
+
+  return formatNumber(total);
+};
+
 function App() {
   const [allProducts, setAllProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -54,7 +66,7 @@ function App() {
             <tfoot>
               <tr>
                 <td>Total</td>
-                <td></td>
+                <td>{getTotal(filteredProducts)}</td>
               </tr>
             </tfoot>
           </table>
