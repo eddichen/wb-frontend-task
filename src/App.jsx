@@ -1,28 +1,68 @@
+import { useEffect, useState } from "react";
+import { getProducts } from "./api/getProducts";
+import Loading from "./components/Loading";
+import ErrorMessage from "./components/ErrorMessage";
+
 const formatNumber = (number) =>
-  new Intl.NumberFormat('en', { minimumFractionDigits: 2 }).format(number);
+  new Intl.NumberFormat("en", { minimumFractionDigits: 2 }).format(number);
 
 function App() {
-  return (
-    <div className="product-list">
-      <label>Search Products</label>
-      <input type="text" />
+  const [allProducts, setAllProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
 
-      <table>
-        <thead>
-          <tr>
-            <th>Product</th>
-            <th>Revenue</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-        <tfoot>
-          <tr>
-            <td>Total</td>
-            <td></td>
-          </tr>
-        </tfoot>
-      </table>
-    </div>
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const products = await getProducts();
+        setAllProducts(products);
+        setFilteredProducts(products);
+        setIsLoading(false);
+      } catch (e) {
+        setIsLoading(false);
+        setIsError(true);
+        console.error("There was a problem fetching products", e);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  return (
+    <>
+      {!isLoading && !isError && (
+        <div className="product-list">
+          <label>Search Products</label>
+          <input type="text" />
+
+          <table>
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Revenue</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredProducts.map((product) => (
+                <tr key={product.id}>
+                  <td>{product.name}</td>
+                  <td>{formatNumber(product.revenue)}</td>
+                </tr>
+              ))}
+            </tbody>
+            <tfoot>
+              <tr>
+                <td>Total</td>
+                <td></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      )}
+      {!isLoading && isError && <ErrorMessage />}
+      {isLoading && <Loading />}
+    </>
   );
 }
 
