@@ -45,8 +45,10 @@ function App() {
     <>
       {!isLoading && !isError && (
         <div className="product-list">
-          <label>Search Products</label>
-          <input type="text" />
+          <div className="form-field">
+            <label htmlFor="search">Search Products</label>
+            <input type="text" name="search" id="search" />
+          </div>
 
           <table>
             <thead>

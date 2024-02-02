@@ -73,3 +73,13 @@ body {
   line-height: 24px;
   outline: none;
 }
+
+.form-field {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.form-field input {
+  flex-grow: 1;
+}
