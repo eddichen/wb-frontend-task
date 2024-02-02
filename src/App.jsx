@@ -23,6 +23,7 @@ function App() {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -41,13 +42,29 @@ function App() {
     fetchProducts();
   }, []);
 
+  const handleSearch = (e) => {
+    const searchValue = e.target.value;
+    setSearchInput(searchValue);
+
+    const filteredProducts = allProducts.filter((product) => {
+      return product.name.toLowerCase().includes(searchValue);
+    });
+    setFilteredProducts(filteredProducts);
+  };
+
   return (
     <>
       {!isLoading && !isError && (
         <div className="product-list">
           <div className="form-field">
             <label htmlFor="search">Search Products</label>
-            <input type="text" name="search" id="search" />
+            <input
+              type="text"
+              name="search"
+              id="search"
+              value={searchInput}
+              onChange={(e) => handleSearch(e)}
+            />
           </div>
 
           <table>
