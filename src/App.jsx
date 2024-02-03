@@ -4,6 +4,7 @@ import { formatNumber } from "./helpers/formatNumber";
 import Loading from "./components/Loading";
 import ErrorMessage from "./components/ErrorMessage";
 import ProductRow from "./components/ProductRow";
+import ProductSearch from "./components/ProductSearch";
 
 const formatNumber = (number) =>
   new Intl.NumberFormat("en", { minimumFractionDigits: 2 }).format(number);
@@ -58,17 +59,10 @@ function App() {
     <>
       {!isLoading && !isError && (
         <div className="product-list">
-          <div className="form-field">
-            <label htmlFor="search">Search Products</label>
-            <input
-              type="text"
-              name="search"
-              id="search"
-              value={searchInput}
-              onChange={(e) => handleSearch(e)}
-            />
-          </div>
-
+          <ProductSearch
+            handleSearch={handleSearch}
+            searchInput={searchInput}
+          />
           <table>
             <thead>
               <tr>
