@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { getProducts } from "./api/getProducts";
-import { formatNumber } from "./helpers/formatNumber";
 import Loading from "./components/Loading";
 import ErrorMessage from "./components/ErrorMessage";
-import ProductRow from "./components/ProductRow";
 import ProductSearch from "./components/ProductSearch";
+import ProductTable from "./components/ProductTable";
 
 const formatNumber = (number) =>
   new Intl.NumberFormat("en", { minimumFractionDigits: 2 }).format(number);
@@ -63,25 +62,7 @@ function App() {
             handleSearch={handleSearch}
             searchInput={searchInput}
           />
-          <table>
-            <thead>
-              <tr>
-                <th>Product</th>
-                <th>Revenue</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredProducts.map((product) => (
-                <ProductRow product={product} key={product.name} />
-              ))}
-            </tbody>
-            <tfoot>
-              <tr>
-                <td>Total</td>
-                <td>{getTotal(filteredProducts)}</td>
-              </tr>
-            </tfoot>
-          </table>
+          <ProductTable products={filteredProducts} />
         </div>
       )}
       {!isLoading && isError && <ErrorMessage />}
