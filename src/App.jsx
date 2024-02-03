@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { getProducts } from "./api/getProducts";
+import { formatNumber } from "./helpers/formatNumber";
 import Loading from "./components/Loading";
 import ErrorMessage from "./components/ErrorMessage";
+import ProductRow from "./components/ProductRow";
 
 const formatNumber = (number) =>
   new Intl.NumberFormat("en", { minimumFractionDigits: 2 }).format(number);
@@ -76,10 +78,7 @@ function App() {
             </thead>
             <tbody>
               {filteredProducts.map((product) => (
-                <tr key={product.id}>
-                  <td>{product.name}</td>
-                  <td>{formatNumber(product.revenue)}</td>
-                </tr>
+                <ProductRow product={product} key={product.name} />
               ))}
             </tbody>
             <tfoot>
