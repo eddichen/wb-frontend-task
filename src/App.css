@@ -10,7 +10,7 @@ body {
   background-color: #fff;
   display: grid;
   justify-content: center;
-  font-family: "open sans";
+  font-family: "open-sans", sans-serif;
 }
 
 .product-list {
@@ -72,4 +72,14 @@ body {
   border-radius: 4px;
   line-height: 24px;
   outline: none;
+}
+
+.form-field {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.form-field input {
+  flex-grow: 1;
 }
